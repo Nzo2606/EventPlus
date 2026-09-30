@@ -1,4 +1,7 @@
 package com.eventplus.domain.participant;
 
-public interface ParticipantRepository {
+import com.eventplus.domain.event.Event;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ParticipantRepository extends JpaRepository<Participant, Long> {
 }
