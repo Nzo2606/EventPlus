@@ -1,6 +1,7 @@
 package com.eventplus.domain.participant;
 
 import com.eventplus.domain.address.Address;
+import com.eventplus.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,18 +12,12 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Participant {
+public class Participant extends User{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
-    private String email;
-    private String phone_number;
+    @Enumerated(EnumType.STRING)
+    private String gender;
 
+    @Column(nullable = false, unique = true)
     private String ssn;
-
-    @Embedded
-    private Address address;
 
 }

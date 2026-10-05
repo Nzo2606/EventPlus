@@ -13,11 +13,29 @@ import lombok.*;
 @EqualsAndHashCode(of = "id")
 public class Organizer {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
-    private String email;
-    private String phone_number;
+    @Column(nullable = false)
+    private String companyName;
+
+    private String tradeName;
+
+    @Column(nullable = false, unique = true)
+    private String cnpj;
+
     private String description;
+
+    @Enumerated(EnumType.STRING)
+    private BusinessType businessType;
+
+    private String website;
+
+    @Column(nullable = false, unique = true)
+    private String companyEmail;
+
+    @Column(nullable = false, unique = true)
+    private String companyPhone;
+
+    private String responsibleName;
+
+    private Boolean verified = false;
+
 }

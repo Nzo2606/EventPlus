@@ -1,8 +1,10 @@
 package com.eventplus.domain.event;
 
+import com.eventplus.domain.address.Address;
 import com.eventplus.domain.category.Category;
 import com.eventplus.domain.organizer.Organizer;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -24,13 +26,27 @@ public class Event {
     private LocalDateTime start_date;
     private LocalDateTime end_date;
     private Double value;
+    private Integer maxParticipants;
+    private Boolean active;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @Embedded
+    private Address address;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "organizer_id")
     private Organizer organizer;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 
+
+    public Event(@Valid EventRegistrationData data) {
+        this.title = data.title();
+        this.description = data.description();
+        this.start_date = data.start_date();
+        this.end_date = data.end_date();
+        this.value = data.value();
+        this.category = data.category();
+    }
 }
