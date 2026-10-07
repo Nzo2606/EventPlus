@@ -23,9 +23,6 @@ public class Organizer {
 
     private String description;
 
-    @Enumerated(EnumType.STRING)
-    private BusinessType businessType;
-
     private String website;
 
     @Column(nullable = false, unique = true)
@@ -35,6 +32,12 @@ public class Organizer {
     private String companyPhone;
 
     private String responsibleName;
+
+    @Enumerated(EnumType.STRING)
+    private BusinessType businessType;
+
+    @Enumerated(EnumType.STRING)
+    private BusinessSector businessSector;
 
     private Boolean verified = false;
 

@@ -5,6 +5,7 @@ import com.eventplus.domain.organizer.Organizer;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public record EventRegistrationData(
@@ -19,7 +20,7 @@ public record EventRegistrationData(
                                     @NotNull
                                     LocalDateTime end_date,
 
-                                    Double value,
+                                    BigDecimal value,
 
                                     Organizer organizer,
 

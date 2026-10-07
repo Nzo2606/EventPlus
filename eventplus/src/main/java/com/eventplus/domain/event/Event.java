@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity(name = "event")
@@ -25,7 +26,7 @@ public class Event {
     private String description;
     private LocalDateTime start_date;
     private LocalDateTime end_date;
-    private Double value;
+    private BigDecimal value;
     private Integer maxParticipants;
     private Boolean active;
 

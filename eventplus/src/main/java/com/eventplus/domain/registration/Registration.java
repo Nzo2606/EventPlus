@@ -20,8 +20,12 @@ public class Registration {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private LocalDateTime date;
-    private Boolean presence;
+
+    private Boolean attendance;
+
+    private RegistrationStatus status;
 
     @ManyToOne
     @JoinColumn(name = "participant_id")

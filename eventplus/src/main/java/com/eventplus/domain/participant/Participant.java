@@ -15,7 +15,7 @@ import lombok.*;
 public class Participant extends User{
 
     @Enumerated(EnumType.STRING)
-    private String gender;
+    private Gender gender;
 
     @Column(nullable = false, unique = true)
     private String ssn;
