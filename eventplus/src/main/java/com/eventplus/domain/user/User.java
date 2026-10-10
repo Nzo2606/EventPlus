@@ -5,7 +5,7 @@ import lombok.*;
 
 
 @Entity(name = "user")
-@Table(name = "user")
+@Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
 @Getter
 @Setter
@@ -27,6 +27,7 @@ public class User {
 
     private String phone_number;
 
+    @Column(nullable = false, columnDefinition = "TINYINT")
     private Boolean active;
 
 

@@ -11,7 +11,6 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = "id")
 public class Participant extends User{
 
     @Enumerated(EnumType.STRING)

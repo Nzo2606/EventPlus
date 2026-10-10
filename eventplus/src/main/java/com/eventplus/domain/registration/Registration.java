@@ -21,10 +21,12 @@ public class Registration {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime date;
+    private LocalDateTime registration_date;
 
+    @Column(nullable = false, columnDefinition = "TINYINT")
     private Boolean attendance;
 
+    @Enumerated(EnumType.STRING)
     private RegistrationStatus status;
 
     @ManyToOne
