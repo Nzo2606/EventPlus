@@ -26,8 +26,9 @@ public class Event {
     private String description;
     private LocalDateTime start_date;
     private LocalDateTime end_date;
-    private BigDecimal value;
+    private BigDecimal price;
     private Integer maxParticipants;
+    @Column(nullable = false, columnDefinition = "TINYINT")
     private Boolean active;
 
     @Embedded
@@ -47,7 +48,7 @@ public class Event {
         this.description = data.description();
         this.start_date = data.start_date();
         this.end_date = data.end_date();
-        this.value = data.value();
+        this.price = data.value();
         this.category = data.category();
     }
 }
