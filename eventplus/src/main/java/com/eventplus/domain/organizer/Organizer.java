@@ -1,6 +1,7 @@
 package com.eventplus.domain.organizer;
 
 
+import com.eventplus.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,12 +11,13 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = "id")
-public class Organizer {
+public class Organizer extends User {
 
-    @Column(nullable = false)
+
+    @Column(nullable = false, name = "company_name")
     private String companyName;
 
+    @Column(name = "trade_name")
     private String tradeName;
 
     @Column(nullable = false, unique = true)
@@ -31,14 +33,13 @@ public class Organizer {
     @Column(nullable = false, unique = true)
     private String companyPhone;
 
-    private String responsibleName;
-
     @Enumerated(EnumType.STRING)
     private BusinessType businessType;
 
     @Enumerated(EnumType.STRING)
     private BusinessSector businessSector;
 
+    @Column(nullable = false, columnDefinition = "TINYINT")
     private Boolean verified = false;
 
 }
