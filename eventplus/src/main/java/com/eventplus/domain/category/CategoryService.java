@@ -4,6 +4,7 @@ import com.eventplus.domain.category.dto.CategoryDeletionData;
 import com.eventplus.domain.category.dto.CategoryDetailData;
 import com.eventplus.domain.category.dto.CategoryRegistrationData;
 import jakarta.validation.ValidationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -36,14 +37,20 @@ public class CategoryService {
 
     //DELETAR CATEGORIA
     @Transactional
-    public CategoryDetailData deleteCategory(Long id){
+    public void deleteCategory(Long id){
         var category = categoryRepository.findById(id)
                 .orElseThrow(() -> new ValidationException(
                         "Category with ID " + id + " doesn't exist!"
                 ));
 
-        categoryRepository.delete(category);
+        categoryRepository.delete(category);}
+
+    public CategoryDetailData detailCategory(Long id) {
+        var category = categoryRepository.findById(id)
+                .orElseThrow(() -> new ValidationException(
+                        "Category with ID " + id + " doesn't exist!"
+                ));
+        category = categoryRepository.getReferenceById(id);
         return new CategoryDetailData(category.getId(), category.getName());
     }
-
 }
