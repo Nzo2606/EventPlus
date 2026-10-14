@@ -22,7 +22,7 @@ public class CategoryService {
         if (categoryRepository.existsByNameIgnoreCase(data.name())){
             throw new ValidationException("The category '" + data.name() + "' already exists!");
         }
-        var category = new Category(data.name());
+        var category = new Category(data.name().toLowerCase());
         categoryRepository.save(category);
         return new CategoryDetailData(category.getId(), data.name());
     }
@@ -34,6 +34,15 @@ public class CategoryService {
                     return new CategoryDetailData(category.getId(), category.getName());
                 });
     }
+    // DETALHAR CATEGORIA
+    public CategoryDetailData detailCategory(Long id) {
+        var category = categoryRepository.findById(id)
+                .orElseThrow(() -> new ValidationException(
+                        "Category with ID " + id + " doesn't exist!"
+                ));
+        category = categoryRepository.getReferenceById(id);
+        return new CategoryDetailData(category.getId(), category.getName());
+    }
 
     //DELETAR CATEGORIA
     @Transactional
@@ -43,14 +52,8 @@ public class CategoryService {
                         "Category with ID " + id + " doesn't exist!"
                 ));
 
-        categoryRepository.delete(category);}
-
-    public CategoryDetailData detailCategory(Long id) {
-        var category = categoryRepository.findById(id)
-                .orElseThrow(() -> new ValidationException(
-                        "Category with ID " + id + " doesn't exist!"
-                ));
-        category = categoryRepository.getReferenceById(id);
-        return new CategoryDetailData(category.getId(), category.getName());
+        categoryRepository.delete(category);
     }
+
+
 }
