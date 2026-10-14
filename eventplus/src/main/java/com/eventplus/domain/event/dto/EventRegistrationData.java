@@ -1,7 +1,9 @@
-package com.eventplus.domain.event;
+package com.eventplus.domain.event.dto;
 
+import com.eventplus.domain.address.Address;
 import com.eventplus.domain.category.Category;
 import com.eventplus.domain.organizer.Organizer;
+import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -18,12 +20,19 @@ public record EventRegistrationData(
                                     LocalDateTime start_date,
 
                                     @NotNull
+                                    @Future
                                     LocalDateTime end_date,
 
-                                    BigDecimal value,
+                                    BigDecimal price,
+
+                                    Integer maxParticipants,
+
+                                    @NotNull
+                                    Address address,
 
                                     Organizer organizer,
 
+                                    @NotBlank
                                     Category category
                                     ){
 }
