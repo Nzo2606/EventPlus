@@ -5,15 +5,12 @@ import com.eventplus.domain.category.Category;
 import com.eventplus.domain.event.dto.EventRegistrationData;
 import com.eventplus.domain.organizer.Organizer;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import lombok.*;
-import org.springframework.cglib.core.Local;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Entity(name = "event")
+@Entity
 @Table(name = "event")
 @Getter
 @Setter
@@ -27,12 +24,14 @@ public class Event {
     private Long id;
     private String title;
     private String description;
-    private LocalDateTime start_date;
-    private LocalDateTime end_date;
+    @Column(name = "start_date")
+    private LocalDateTime startDate;
+    @Column(name = "endDate")
+    private LocalDateTime endDate;
     private BigDecimal price;
     private Integer maxParticipants;
     @Column(nullable = false, columnDefinition = "TINYINT")
-    private Boolean active;
+    private Boolean active = true;
 
     @Embedded
     private Address address;
@@ -45,38 +44,38 @@ public class Event {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private EventStatus status;
 
-    private String cancellation_reason;
+    @Column(name = "cancellation_reason")
+    private String cancellationReason;
 
     public void cancel(String cancellation_reason){
-        this.cancellation_reason = cancellation_reason;
+        this.cancellationReason = cancellation_reason;
     }
 
-    public void setStatus() {
-        if (cancellation_reason != null){
+    public void updateStatus() {
+        var now = LocalDateTime.now();
+
+        if (cancellationReason != null && !cancellationReason.isBlank()) {
             this.status = EventStatus.CANCELED;
-        }
-        else if (end_date.isAfter(LocalDateTime.now())) {
+        } else if (!now.isBefore(endDate)) {
             this.status = EventStatus.CONCLUDED;
-        }
-        else if (start_date.isBefore(LocalDateTime.now()) && end_date.isAfter(LocalDateTime.now())) {
+        } else if (!now.isBefore(startDate)) {
             this.status = EventStatus.IN_PROGRESS;
-        }
-        else{
+        } else {
             this.status = EventStatus.SCHEDULED;
         }
     }
 
-    public Event(@Valid EventRegistrationData data) {
+    public Event(EventRegistrationData data) {
         this.title = data.title();
         this.description = data.description();
-        this.start_date = data.start_date();
-        this.end_date = data.end_date();
+        this.startDate = data.startDate();
+        this.endDate = data.endDate();
         this.price = data.price();
         this.maxParticipants = data.maxParticipants();
         this.address = data.address();
-        this.organizer = data.organizer();
-        this.category = data.category();
     }
 }
