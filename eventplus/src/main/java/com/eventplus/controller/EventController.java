@@ -38,7 +38,7 @@ public class EventController {
         return ResponseEntity.ok(event);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<EventDetailData> detail(@PathVariable Long id){
         var event = eventService.detail(id);
 
@@ -46,7 +46,7 @@ public class EventController {
     }
 
     @DeleteMapping
-    public ResponseEntity cancel (@PathVariable EventCancellationData data){
+    public ResponseEntity cancel (@RequestBody @Valid EventCancellationData data){
         eventService.cancel(data);
 
         return ResponseEntity.noContent().build();

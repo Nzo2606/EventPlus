@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class EventService {
@@ -25,19 +26,20 @@ public class EventService {
     @Autowired
     CategoryRepository categoryRepository;
 
+    @Transactional
     // REGISTRAR EVENTO
     public EventDetailData register(EventRegistrationData data){
 
-        if (data.organizer() != null && !organizerRepository.existsById(data.organizer().getId())){
-            throw new ValidationException("Informed organizer does not exist!");
+        if (data.organizerId() != null && !organizerRepository.existsById(data.organizerId())){
+            throw new ValidationException("Informed organizer Id does not exist!");
         }
 
-        if (!categoryRepository.existsByNameIgnoreCase(data.category().getName())){
-            throw new ValidationException("Informed category does not exist!");
+        if (!categoryRepository.existsById(data.categoryId())){
+            throw new ValidationException("Informed category Id does not exist!");
         }
 
         var event = new Event(data);
-        event.setStatus();
+        event.updateStatus();
         eventRepository.save(event);
 
         return new EventDetailData(event);
@@ -58,6 +60,7 @@ public class EventService {
         return new EventDetailData(event);
     }
 
+    @Transactional
     // CANCELAR EVENTO
     public void cancel (@Valid EventCancellationData data){
         if (!eventRepository.existsById(data.eventId())){
@@ -65,6 +68,6 @@ public class EventService {
         }
         var event = eventRepository.getReferenceById(data.eventId());
         event.cancel(data.reason());
-        event.setStatus();
+        event.updateStatus();
     }
 }
