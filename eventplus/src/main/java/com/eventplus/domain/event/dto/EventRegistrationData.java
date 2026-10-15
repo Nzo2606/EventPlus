@@ -1,11 +1,8 @@
 package com.eventplus.domain.event.dto;
 
 import com.eventplus.domain.address.Address;
-import com.eventplus.domain.category.Category;
-import com.eventplus.domain.organizer.Organizer;
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -17,22 +14,26 @@ public record EventRegistrationData(
                                     String description,
 
                                     @NotNull
-                                    LocalDateTime start_date,
+                                    @Future
+                                    LocalDateTime startDate,
 
                                     @NotNull
                                     @Future
-                                    LocalDateTime end_date,
+                                    LocalDateTime endDate,
 
+                                    @DecimalMin("0.00")
                                     BigDecimal price,
 
+                                    @Positive
                                     Integer maxParticipants,
 
                                     @NotNull
+                                    @Valid
                                     Address address,
 
-                                    Organizer organizer,
+                                    Long organizerId,
 
                                     @NotBlank
-                                    Category category
+                                    Long categoryId
                                     ){
 }

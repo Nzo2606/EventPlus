@@ -1,9 +1,7 @@
 package com.eventplus.domain.event.dto;
 
 import com.eventplus.domain.address.Address;
-import com.eventplus.domain.category.Category;
 import com.eventplus.domain.event.Event;
-import com.eventplus.domain.organizer.Organizer;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -16,8 +14,8 @@ public record EventDetailData(
                                 BigDecimal price,
                                 Integer maxParticipants,
                                 Address address,
-                                Organizer organizer,
-                                Category category
+                                Long organizerId,
+                                Long categoryId
 
 ) {
     public EventDetailData(Event event) {
@@ -25,13 +23,13 @@ public record EventDetailData(
             event.getId(),
             event.getTitle(),
             event.getDescription(),
-            event.getStart_date(),
-            event.getEnd_date(),
+            event.getStartDate(),
+            event.getEndDate(),
             event.getPrice(),
             event.getMaxParticipants(),
             event.getAddress(),
-            event.getOrganizer(),
-            event.getCategory()
+            event.getOrganizer().getId(),
+            event.getCategory().getId()
         );
     }
 }
