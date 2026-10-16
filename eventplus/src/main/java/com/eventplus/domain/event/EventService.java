@@ -30,15 +30,18 @@ public class EventService {
     // REGISTRAR EVENTO
     public EventDetailData register(EventRegistrationData data){
 
-        if (data.organizerId() != null && !organizerRepository.existsById(data.organizerId())){
-            throw new ValidationException("Informed organizer Id does not exist!");
-        }
+        var category = categoryRepository.findById(data.categoryId())
+                .orElseThrow(() ->
+                        new ValidationException("Informed category Id does not exist!"));
 
-        if (!categoryRepository.existsById(data.categoryId())){
-            throw new ValidationException("Informed category Id does not exist!");
-        }
+        var organizer = organizerRepository.findById(data.organizerId())
+                .orElseThrow(() ->
+                        new ValidationException("Informed organizer Id does not exist!"));
 
         var event = new Event(data);
+        event.setCategory(category);
+        event.setOrganizer(organizer);
+
         event.updateStatus();
         eventRepository.save(event);
 

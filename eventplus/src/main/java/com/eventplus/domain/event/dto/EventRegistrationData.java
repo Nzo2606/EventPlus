@@ -33,7 +33,7 @@ public record EventRegistrationData(
 
                                     Long organizerId,
 
-                                    @NotBlank
+                                    @NotNull
                                     Long categoryId
                                     ){
 }

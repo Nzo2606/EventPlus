@@ -26,7 +26,7 @@ public class Event {
     private String description;
     @Column(name = "start_date")
     private LocalDateTime startDate;
-    @Column(name = "endDate")
+    @Column(name = "end_date")
     private LocalDateTime endDate;
     private BigDecimal price;
     private Integer maxParticipants;
