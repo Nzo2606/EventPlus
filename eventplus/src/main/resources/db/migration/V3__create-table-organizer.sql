@@ -1,7 +1,7 @@
 create table organizer(
     id bigint not null,
-    companyName varchar(100) not null,
-    tradeName varchar(100),
+    company_name varchar(100) not null,
+    trade_name varchar(100),
     cnpj varchar(14) not null unique,
     description varchar(200),
     website varchar(200),

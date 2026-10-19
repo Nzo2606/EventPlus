@@ -7,7 +7,7 @@ create table event(
     price decimal (10, 2),
     max_participants int,
     company_phone varchar(20) not null,
-    verified tinyint not null default 1,
+    active tinyint not null default 1,
 
     street varchar(100) not null,
     neighborhood varchar(100) not null,
