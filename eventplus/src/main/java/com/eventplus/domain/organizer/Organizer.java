@@ -1,6 +1,7 @@
 package com.eventplus.domain.organizer;
 
 
+import com.eventplus.domain.organizer.dto.OrganizerRegistrationData;
 import com.eventplus.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,7 +31,7 @@ public class Organizer extends User {
     @Column(nullable = false, unique = true)
     private String companyEmail;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, name = "company_phone")
     private String companyPhone;
 
     @Enumerated(EnumType.STRING)
@@ -42,4 +43,15 @@ public class Organizer extends User {
     @Column(nullable = false, columnDefinition = "TINYINT")
     private Boolean verified = false;
 
+    public Organizer(OrganizerRegistrationData data) {
+        this.companyName = data.companyName();
+        this.tradeName = data.tradeName();
+        this.cnpj = data.cnpj();
+        this.description = data.description();
+        this.website = data.website();
+        this.companyEmail = data.companyEmail();
+        this.companyPhone = data.companyPhone();
+        this.businessType = data.businessType();
+        this.businessSector = data.businessSector();
+    }
 }
