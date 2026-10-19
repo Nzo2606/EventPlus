@@ -1,11 +1,8 @@
-package com.eventplus.domain.organizer;
+package com.eventplus.domain.organizer.dto;
 
-import com.eventplus.domain.address.Address;
-import jakarta.validation.Valid;
+import com.eventplus.domain.organizer.BusinessSector;
+import com.eventplus.domain.organizer.BusinessType;
 import jakarta.validation.constraints.*;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 public record OrganizerRegistrationData(
                                         @NotBlank
@@ -14,6 +11,10 @@ public record OrganizerRegistrationData(
                                         String tradeName,
 
                                         @NotBlank
+                                        @Pattern(
+                                                regexp = "^[A-Za-z0-9]{8}[A-Za-z0-9]{4}\\d{2}$",
+                                                message = "O CNPJ deve conter 14 caracteres alfanuméricos válidos (apenas números e letras, com os dois últimos caracteres estritamente numéricos)"
+                                        )
                                         String cnpj,
 
                                         String description,
