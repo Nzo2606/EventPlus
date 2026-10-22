@@ -44,6 +44,13 @@ public class Organizer extends User {
     private Boolean verified = false;
 
     public Organizer(OrganizerRegistrationData data) {
+        super(
+                data.name(),
+                data.email(),
+                data.password(),
+                data.phone_number()
+        );
+
         this.companyName = data.companyName();
         this.tradeName = data.tradeName();
         this.cnpj = data.cnpj();

@@ -5,6 +5,21 @@ import com.eventplus.domain.organizer.BusinessType;
 import jakarta.validation.constraints.*;
 
 public record OrganizerRegistrationData(
+
+                                        // Campos herdados de User
+                                        @NotBlank
+                                        String name,
+
+                                        @NotBlank
+                                        @Email
+                                        String email,
+
+                                        @NotBlank
+                                        String password,
+
+                                        @NotBlank
+                                        String phone_number,
+
                                         @NotBlank
                                         String companyName,
 

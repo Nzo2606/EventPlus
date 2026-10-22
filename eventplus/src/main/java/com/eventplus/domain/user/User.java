@@ -31,4 +31,10 @@ public class User {
     private Boolean active;
 
 
+    public User(String name, String email, String password, String phone_number) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.phone_number = phone_number;
+    }
 }

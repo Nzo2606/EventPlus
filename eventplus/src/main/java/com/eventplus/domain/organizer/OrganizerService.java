@@ -23,6 +23,8 @@ public class OrganizerService {
             throw new ValidationException("This cnpj is already registered by another company!");
         }
         var organizer = new Organizer(data);
+        organizer.setActive(true);
+        organizer.setVerified(false);
         repository.save(organizer);
         return new OrganizerDetailData(organizer);
     }

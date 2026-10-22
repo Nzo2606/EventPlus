@@ -32,7 +32,7 @@ public class OrganizerController {
 
 
     @GetMapping
-    public ResponseEntity<Page<OrganizerListData>> list(@PageableDefault(size = 10, sort = {"title"}) Pageable pageable){
+    public ResponseEntity<Page<OrganizerListData>> list(@PageableDefault(size = 10, sort = {"companyName"}) Pageable pageable){
         var event = organizerService.listAll(pageable);
 
         return ResponseEntity.ok(event);
