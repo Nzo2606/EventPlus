@@ -3,6 +3,7 @@ package com.eventplus.domain.registration;
 
 import com.eventplus.domain.event.Event;
 import com.eventplus.domain.participant.Participant;
+import com.eventplus.domain.registration.dto.RegistrationCreateData;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -36,4 +37,12 @@ public class Registration {
     @ManyToOne
     @JoinColumn(name = "event_id")
     private Event event;
+
+    public Registration(RegistrationCreateData data) {
+        this.registration_date = data.registration_date();
+    }
+
+    public void setStatus(RegistrationStatus status) {
+        this.status = status;
+    }
 }
