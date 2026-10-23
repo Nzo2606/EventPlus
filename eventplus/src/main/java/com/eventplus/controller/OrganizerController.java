@@ -4,6 +4,7 @@ import com.eventplus.domain.organizer.OrganizerService;
 import com.eventplus.domain.organizer.dto.OrganizerDetailData;
 import com.eventplus.domain.organizer.dto.OrganizerListData;
 import com.eventplus.domain.organizer.dto.OrganizerRegistrationData;
+import com.eventplus.domain.organizer.dto.OrganizerUpdateData;
 import jakarta.validation.Valid;
 import jakarta.xml.bind.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -38,10 +40,24 @@ public class OrganizerController {
         return ResponseEntity.ok(event);
     }
 
+    @PutMapping
+    @Transactional
+    public ResponseEntity<OrganizerDetailData> update(@RequestBody @Valid OrganizerUpdateData data) throws ValidationException {
+        var organizer = organizerService.update(data);
+        return ResponseEntity.ok(organizer);
+    }
+
+
     @GetMapping("/{id}")
     public ResponseEntity<OrganizerDetailData> detail(@PathVariable Long id) throws ValidationException {
         var event = organizerService.detail(id);
 
         return ResponseEntity.ok(event);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete (@PathVariable Long id) throws ValidationException {
+        organizerService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
