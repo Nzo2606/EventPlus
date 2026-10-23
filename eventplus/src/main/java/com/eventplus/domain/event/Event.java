@@ -31,6 +31,7 @@ public class Event {
     private LocalDateTime endDate;
     private BigDecimal price;
     private Integer maxParticipants;
+    private Integer totalParticipants;
     @Column(nullable = false, columnDefinition = "TINYINT")
     private Boolean active = true;
 
