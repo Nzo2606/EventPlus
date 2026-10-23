@@ -24,7 +24,9 @@ public record OrganizerDetailData(
 
                                         BusinessType businessType,
 
-                                        BusinessSector businessSector
+                                        BusinessSector businessSector,
+
+                                        Boolean active
 
                                         )
 {
@@ -39,7 +41,8 @@ public record OrganizerDetailData(
                 organizer.getCompanyEmail(),
                 organizer.getCompanyPhone(),
                 organizer.getBusinessType(),
-                organizer.getBusinessSector()
+                organizer.getBusinessSector(),
+                organizer.getActive()
         );
     }
 }
