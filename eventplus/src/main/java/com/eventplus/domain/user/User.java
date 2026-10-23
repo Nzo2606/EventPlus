@@ -37,4 +37,8 @@ public class User {
         this.password = password;
         this.phone_number = phone_number;
     }
+
+    public void delete(){
+        this.active = false;
+    }
 }
