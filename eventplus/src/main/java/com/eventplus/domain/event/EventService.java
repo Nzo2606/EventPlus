@@ -1,10 +1,7 @@
 package com.eventplus.domain.event;
 
 import com.eventplus.domain.category.CategoryRepository;
-import com.eventplus.domain.event.dto.EventCancellationData;
-import com.eventplus.domain.event.dto.EventDetailData;
-import com.eventplus.domain.event.dto.EventListData;
-import com.eventplus.domain.event.dto.EventRegistrationData;
+import com.eventplus.domain.event.dto.*;
 import com.eventplus.domain.organizer.OrganizerRepository;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
@@ -61,6 +58,37 @@ public class EventService {
         }
         var event = eventRepository.getReferenceById(id);
         return new EventDetailData(event);
+    }
+
+    @Transactional
+    public EventDetailData update(EventUpdateData data){
+        if (!eventRepository.existsById(data.id())){
+            throw new ValidationException("Informed event Id does not exist!");
+        }
+
+        var event = eventRepository.getReferenceById(data.id());
+
+        event.updateData(data);
+
+        if (data.organizerId() != null) {
+            var organizer = organizerRepository.findById(data.organizerId())
+                    .orElseThrow(() ->
+                            new ValidationException("Informed organizer Id does not exist!"));
+
+            event.setOrganizer(organizer);
+        }
+
+        if (data.categoryId() != null) {
+            var category = categoryRepository.findById(data.categoryId())
+                    .orElseThrow(() ->
+                            new ValidationException("Informed category Id does not exist!"));
+
+            event.setCategory(category);
+        }
+
+        event.updateStatus();
+        return new EventDetailData(event);
+
     }
 
     @Transactional
