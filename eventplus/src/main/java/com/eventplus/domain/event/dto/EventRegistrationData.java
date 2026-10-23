@@ -1,6 +1,7 @@
 package com.eventplus.domain.event.dto;
 
 import com.eventplus.domain.address.Address;
+import com.eventplus.domain.address.AddressData;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 
@@ -29,7 +30,7 @@ public record EventRegistrationData(
 
                                     @NotNull
                                     @Valid
-                                    Address address,
+                                    AddressData address,
 
                                     Long organizerId,
 
