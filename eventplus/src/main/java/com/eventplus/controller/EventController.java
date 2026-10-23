@@ -1,16 +1,14 @@
 package com.eventplus.controller;
 
 import com.eventplus.domain.event.EventService;
-import com.eventplus.domain.event.dto.EventCancellationData;
-import com.eventplus.domain.event.dto.EventDetailData;
-import com.eventplus.domain.event.dto.EventListData;
-import com.eventplus.domain.event.dto.EventRegistrationData;
+import com.eventplus.domain.event.dto.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -42,6 +40,13 @@ public class EventController {
     public ResponseEntity<EventDetailData> detail(@PathVariable Long id){
         var event = eventService.detail(id);
 
+        return ResponseEntity.ok(event);
+    }
+
+    @PutMapping
+    @Transactional
+    public ResponseEntity update( @RequestBody @Valid EventUpdateData data){
+        var event = eventService.update(data);
         return ResponseEntity.ok(event);
     }
 
