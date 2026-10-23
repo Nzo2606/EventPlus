@@ -1,5 +1,6 @@
 package com.eventplus.domain.event;
 
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -30,4 +31,12 @@ public interface EventRepository extends JpaRepository<Event, Long> {
         Page<Event> findActiveEventsByOrganizerId(Long id, Pageable pagination);
 
         Page<Event> findByStartDate(LocalDateTime start_date, Pageable pagination);
+
+        @Query("""
+                select e.active
+                from event e
+                where
+                e.id = :id
+                """)
+        Boolean findActiveById(Long id);
 }
