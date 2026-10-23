@@ -2,6 +2,7 @@ package com.eventplus.domain.organizer;
 
 
 import com.eventplus.domain.organizer.dto.OrganizerRegistrationData;
+import com.eventplus.domain.organizer.dto.OrganizerUpdateData;
 import com.eventplus.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -61,4 +62,36 @@ public class Organizer extends User {
         this.businessType = data.businessType();
         this.businessSector = data.businessSector();
     }
+
+    public void updateData(OrganizerUpdateData data) {
+        if(data.companyName() != null){
+           this.companyName = data.companyName();
+        }
+        if(data.tradeName() != null){
+            this.tradeName = data.tradeName();
+        }
+        if(data.cnpj() != null){
+            this.cnpj = data.cnpj();
+        }
+        if(data.description() != null){
+            this.description = data.description();
+        }
+        if(data.website() != null){
+            this.website = data.website();
+        }
+        if(data.companyEmail() != null){
+            this.companyEmail = data.companyEmail();
+        }
+        if(data.companyPhone() != null){
+            this.companyPhone = data.companyPhone();
+        }
+        if(data.companyName() != null){
+            this.businessType = data.businessType();
+        }
+        if(data.businessSector() != null){
+            this.businessSector = data.businessSector();
+        }
+
+    }
+
 }
