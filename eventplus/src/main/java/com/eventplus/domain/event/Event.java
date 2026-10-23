@@ -3,6 +3,7 @@ package com.eventplus.domain.event;
 import com.eventplus.domain.address.Address;
 import com.eventplus.domain.category.Category;
 import com.eventplus.domain.event.dto.EventRegistrationData;
+import com.eventplus.domain.event.dto.EventUpdateData;
 import com.eventplus.domain.organizer.Organizer;
 import jakarta.persistence.*;
 import lombok.*;
@@ -76,6 +77,30 @@ public class Event {
         this.endDate = data.endDate();
         this.price = data.price();
         this.maxParticipants = data.maxParticipants();
-        this.address = data.address();
+        this.address = new Address(data.address());
+    }
+
+    public void updateData(EventUpdateData data) {
+        if (data.title() != null){
+            this.title = data.title();
+        }
+        if (data.description() != null){
+            this.description = data.description();
+        }
+        if (data.startDate() != null){
+            this.startDate = data.startDate();
+        }
+        if (data.endDate() != null){
+            this.endDate = data.endDate();
+        }
+        if (data.price() != null){
+            this.price = data.price();
+        }
+        if (data.maxParticipants() != null){
+            this.maxParticipants = data.maxParticipants();
+        }
+        if (data.address() != null){
+            this.address.updateData(data.address());
+        }
     }
 }

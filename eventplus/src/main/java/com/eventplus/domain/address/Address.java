@@ -2,6 +2,8 @@ package com.eventplus.domain.address;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,4 +21,38 @@ public class Address {
     String state;
     String complement;
     String number;
+
+    public Address(AddressData address) {
+        this.street = address.street();
+        this.neighborhood = address.neighborhood();
+        this.zipCode = address.zip_code();
+        this.city = address.city();
+        this.state = address.state();
+        this.complement = address.complement();
+        this.number = address.number();
+    }
+
+    public void updateData(AddressData data) {
+        if (data.street() != null){
+            this.street = data.street();
+        }
+        if (data.neighborhood() != null){
+            this.neighborhood = data.neighborhood();
+        }
+        if (data.zip_code() != null){
+            this.zipCode = data.zip_code();
+        }
+        if (data.city() != null){
+            this.city = data.city();
+        }
+        if (data.state() != null){
+            this.state = data.state();
+        }
+        if (data.complement() != null){
+            this.complement = data.complement();
+        }
+        if (data.number() != null){
+            this.number = data.number();
+        }
+    }
 }
