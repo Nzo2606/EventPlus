@@ -5,11 +5,15 @@ import com.eventplus.domain.category.Category;
 import com.eventplus.domain.event.dto.EventRegistrationData;
 import com.eventplus.domain.event.dto.EventUpdateData;
 import com.eventplus.domain.organizer.Organizer;
+import com.eventplus.domain.registration.enums.PricingMode;
+import com.eventplus.domain.registration.enums.RegistrationMode;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "event")
@@ -52,6 +56,23 @@ public class Event {
 
     @Column(name = "cancellation_reason")
     private String cancellationReason;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "registration_mode", nullable = false)
+    private RegistrationMode registrationMode;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "pricing_mode", nullable = false)
+    private PricingMode pricingMode;
+
+    @OneToMany(
+            mappedBy = "event",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<EventOccurrence> occurrences = new ArrayList<>();
+
+
 
     public void cancel(String cancellation_reason){
         this.cancellationReason = cancellation_reason;
@@ -103,5 +124,16 @@ public class Event {
         if (data.address() != null){
             this.address.updateData(data.address());
         }
+    }
+
+
+    public void addOccurrence(EventOccurrence occurrence){
+        occurrences.add(occurrence);
+        occurrence.setEvent(this);
+    }
+
+    public void removeOccurrence(EventOccurrence occurrence){
+        occurrences.remove(occurrence);
+        occurrence.setEvent(null);
     }
 }
