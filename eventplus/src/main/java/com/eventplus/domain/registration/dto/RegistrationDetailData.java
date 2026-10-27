@@ -1,7 +1,7 @@
 package com.eventplus.domain.registration.dto;
 
 import com.eventplus.domain.registration.Registration;
-import com.eventplus.domain.registration.RegistrationStatus;
+import com.eventplus.domain.registration.enums.RegistrationStatus;
 
 import java.time.LocalDateTime;
 

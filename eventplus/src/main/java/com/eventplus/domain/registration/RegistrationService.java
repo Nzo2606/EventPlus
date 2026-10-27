@@ -5,6 +5,7 @@ import com.eventplus.domain.participant.ParticipantRepository;
 import com.eventplus.domain.registration.dto.RegistrationCreateData;
 import com.eventplus.domain.registration.dto.RegistrationDetailData;
 import com.eventplus.domain.registration.dto.RegistrationListData;
+import com.eventplus.domain.registration.enums.RegistrationStatus;
 import jakarta.xml.bind.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

@@ -4,6 +4,7 @@ package com.eventplus.domain.registration;
 import com.eventplus.domain.event.Event;
 import com.eventplus.domain.participant.Participant;
 import com.eventplus.domain.registration.dto.RegistrationCreateData;
+import com.eventplus.domain.registration.enums.RegistrationStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
