@@ -1,4 +1,4 @@
-package com.eventplus.domain.registration;
+package com.eventplus.domain.registration.enums;
 
 public enum RegistrationStatus {
     PENDING,
