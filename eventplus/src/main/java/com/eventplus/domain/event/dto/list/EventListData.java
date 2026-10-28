@@ -1,8 +1,7 @@
-package com.eventplus.domain.event.dto;
+package com.eventplus.domain.event.dto.list;
 
-import com.eventplus.domain.category.Category;
 import com.eventplus.domain.event.Event;
-import com.eventplus.domain.organizer.Organizer;
+
 import java.time.LocalDateTime;
 
 public record EventListData(

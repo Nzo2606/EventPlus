@@ -1,7 +1,11 @@
 package com.eventplus.domain.event;
 
 import com.eventplus.domain.category.CategoryRepository;
-import com.eventplus.domain.event.dto.*;
+import com.eventplus.domain.event.dto.cancellation.EventCancellationData;
+import com.eventplus.domain.event.dto.detail.EventDetailData;
+import com.eventplus.domain.event.dto.list.EventListData;
+import com.eventplus.domain.event.dto.registration.EventRegistrationData;
+import com.eventplus.domain.event.dto.update.EventUpdateData;
 import com.eventplus.domain.organizer.OrganizerRepository;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;

@@ -1,4 +1,4 @@
-package com.eventplus.domain.event.dto;
+package com.eventplus.domain.event.dto.cancellation;
 
 import jakarta.validation.constraints.NotNull;
 

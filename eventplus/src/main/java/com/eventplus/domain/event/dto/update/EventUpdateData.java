@@ -1,4 +1,4 @@
-package com.eventplus.domain.event.dto;
+package com.eventplus.domain.event.dto.update;
 
 import com.eventplus.domain.address.AddressData;
 import jakarta.validation.constraints.*;

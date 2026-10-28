@@ -1,7 +1,11 @@
 package com.eventplus.controller;
 
 import com.eventplus.domain.event.EventService;
-import com.eventplus.domain.event.dto.*;
+import com.eventplus.domain.event.dto.cancellation.EventCancellationData;
+import com.eventplus.domain.event.dto.detail.EventDetailData;
+import com.eventplus.domain.event.dto.list.EventListData;
+import com.eventplus.domain.event.dto.registration.EventRegistrationData;
+import com.eventplus.domain.event.dto.update.EventUpdateData;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
