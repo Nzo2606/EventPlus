@@ -23,27 +23,22 @@ public class Registration {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime registration_date;
+    private LocalDateTime registrationDate;
 
-    @Column(nullable = false, columnDefinition = "TINYINT")
-    private Boolean attendance;
 
     @Enumerated(EnumType.STRING)
     private RegistrationStatus status;
 
-    @ManyToOne
-    @JoinColumn(name = "participant_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "participant_id", nullable = false)
     private Participant participant;
 
-    @ManyToOne
-    @JoinColumn(name = "event_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "event_id", nullable = false)
     private Event event;
 
     public Registration(RegistrationCreateData data) {
-        this.registration_date = data.registration_date();
+        this.registrationDate = data.registration_date();
     }
 
-    public void setStatus(RegistrationStatus status) {
-        this.status = status;
-    }
 }

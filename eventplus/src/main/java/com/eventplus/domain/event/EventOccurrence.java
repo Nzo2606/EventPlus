@@ -1,6 +1,5 @@
 package com.eventplus.domain.event;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,6 +25,4 @@ public class EventOccurrence {
 
     @Column(name = "end_date_time", nullable = false)
     private LocalDateTime endDateTime;
-
-    private Integer capacity;
 }
