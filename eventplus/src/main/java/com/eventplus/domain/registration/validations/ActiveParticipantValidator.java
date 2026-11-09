@@ -2,17 +2,20 @@ package com.eventplus.domain.registration.validations;
 
 import com.eventplus.domain.event.EventRepository;
 import com.eventplus.domain.participant.ParticipantRepository;
+import com.eventplus.domain.registration.Registration;
 import com.eventplus.domain.registration.dto.RegistrationCreateData;
 import jakarta.xml.bind.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ActiveParticipantValidator implements RegistrationCreationData {
 
     @Autowired
     ParticipantRepository participantRepository;
 
     @Override
-    public void validate(RegistrationCreateData data) throws ValidationException {
+    public void validate(RegistrationCreateData data, Registration registration) throws ValidationException {
         var participantIsActive = participantRepository.findActiveById(data.eventId());
 
         if (!participantIsActive){
