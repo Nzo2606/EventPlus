@@ -3,7 +3,6 @@ package com.eventplus.domain.registration;
 
 import com.eventplus.domain.event.Event;
 import com.eventplus.domain.participant.Participant;
-import com.eventplus.domain.registration.dto.RegistrationCreateData;
 import com.eventplus.domain.registration.enums.RegistrationStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -19,10 +18,12 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(of = "id")
 public class Registration {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private LocalDateTime registrationDate;
 
 
@@ -37,8 +38,15 @@ public class Registration {
     @JoinColumn(name = "event_id", nullable = false)
     private Event event;
 
-    public Registration(RegistrationCreateData data) {
-        this.registrationDate = data.registration_date();
+    private LocalDateTime paymentConfirmedAt;
+
+
+
+    public void setRegistrationDate() {
+        this.registrationDate = LocalDateTime.now();
     }
 
+    public void setPaymentConfirmedAt() {
+        this.paymentConfirmedAt = LocalDateTime.now();
+    }
 }
