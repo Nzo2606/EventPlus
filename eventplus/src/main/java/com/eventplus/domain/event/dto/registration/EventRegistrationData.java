@@ -24,6 +24,14 @@ public record EventRegistrationData(
                                     @Future
                                     LocalDateTime endDate,
 
+                                    @NotNull
+                                    @Future
+                                    LocalDateTime registrationStartDate,
+
+                                    @NotNull
+                                    @Future
+                                    LocalDateTime registrationDeadline,
+
                                     @DecimalMin("0.00")
                                     BigDecimal price,
 

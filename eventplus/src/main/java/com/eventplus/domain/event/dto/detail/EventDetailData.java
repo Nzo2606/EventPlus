@@ -2,7 +2,7 @@ package com.eventplus.domain.event.dto.detail;
 
 import com.eventplus.domain.address.Address;
 import com.eventplus.domain.event.Event;
-import com.eventplus.domain.event.EventOccurrence;
+import com.eventplus.domain.event.ocurrence.EventOccurrence;
 import com.eventplus.domain.registration.enums.PricingMode;
 import com.eventplus.domain.registration.enums.RegistrationMode;
 
@@ -16,6 +16,8 @@ public record EventDetailData(
                                 String description,
                                 LocalDateTime start_date,
                                 LocalDateTime end_date,
+                                LocalDateTime registrationStartDate,
+                                LocalDateTime registrationDeadline,
                                 BigDecimal price,
                                 Integer maxParticipants,
                                 Address address,
@@ -33,6 +35,8 @@ public record EventDetailData(
             event.getDescription(),
             event.getStartDate(),
             event.getEndDate(),
+            event.getRegistrationStartDate(),
+            event.getRegistrationDeadline(),
             event.getPrice(),
             event.getMaxParticipants(),
             event.getAddress(),

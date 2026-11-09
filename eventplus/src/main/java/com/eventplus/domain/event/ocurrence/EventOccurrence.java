@@ -1,5 +1,6 @@
-package com.eventplus.domain.event;
+package com.eventplus.domain.event.ocurrence;
 
+import com.eventplus.domain.event.Event;
 import jakarta.persistence.*;
 import lombok.*;
 

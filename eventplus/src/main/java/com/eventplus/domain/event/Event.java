@@ -4,6 +4,7 @@ import com.eventplus.domain.address.Address;
 import com.eventplus.domain.category.Category;
 import com.eventplus.domain.event.dto.registration.EventRegistrationData;
 import com.eventplus.domain.event.dto.update.EventUpdateData;
+import com.eventplus.domain.event.ocurrence.EventOccurrence;
 import com.eventplus.domain.organizer.Organizer;
 import com.eventplus.domain.registration.enums.PricingMode;
 import com.eventplus.domain.registration.enums.RegistrationMode;
@@ -29,10 +30,18 @@ public class Event {
     private Long id;
     private String title;
     private String description;
+
     @Column(name = "start_date")
     private LocalDateTime startDate;
     @Column(name = "end_date")
     private LocalDateTime endDate;
+
+    @Column(name = "registraiton_start_date")
+    private LocalDateTime registrationStartDate;
+
+    @Column(name = "registration_dead_line")
+    private LocalDateTime registrationDeadline;
+
     private BigDecimal price;
     private Integer maxParticipants;
     private Integer totalParticipants;
