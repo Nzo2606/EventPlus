@@ -14,18 +14,16 @@ public record RegistrationDetailData(
 
                                     LocalDateTime registration_date,
 
-                                    RegistrationStatus status,
+                                    RegistrationStatus status
 
-                                    Boolean attendance
 ) {
     public RegistrationDetailData(Registration registration) {
         this(
                 registration.getId(),
                 registration.getEvent().getId(),
                 registration.getParticipant().getId(),
-                registration.getRegistration_date(),
-                registration.getStatus(),
-                registration.getAttendance()
+                registration.getRegistrationDate(),
+                registration.getStatus()
         );
     }
 }

@@ -4,6 +4,7 @@ package com.eventplus.domain.registration.dto;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public record RegistrationCreateData(
                                     @NotNull
@@ -12,6 +13,6 @@ public record RegistrationCreateData(
                                     @NotNull
                                     Long eventId,
 
-                                    LocalDateTime registration_date
-) {
+                                    List<Long> occurrenceIds)
+{
 }

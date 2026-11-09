@@ -35,7 +35,7 @@ public class RegistrationService {
                 .orElseThrow(() ->
                         new ValidationException("The informed participant Id does not exist!")
                 );
-        var registration = new Registration(data);
+        var registration = new Registration();
         registration.setEvent(event);
         registration.setParticipant(participant);
         registration.setStatus(RegistrationStatus.CONFIRMED);
