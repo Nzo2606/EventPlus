@@ -44,7 +44,7 @@ public class Event {
 
     private BigDecimal price;
     private Integer maxParticipants;
-    private Integer totalParticipants;
+    private Integer totalParticipants = 0;
     @Column(nullable = false, columnDefinition = "TINYINT")
     private Boolean active = true;
 
@@ -136,8 +136,9 @@ public class Event {
     }
 
 
-    public void addNewParticipant(Integer addParticipant) {
-        this.totalParticipants = getTotalParticipants() + addParticipant;
+    public void addNewParticipant() {
+        this.totalParticipants =
+                (this.totalParticipants == null ? 0 : this.totalParticipants) + 1;
     }
 
     public void addOccurrence(EventOccurrence occurrence){
