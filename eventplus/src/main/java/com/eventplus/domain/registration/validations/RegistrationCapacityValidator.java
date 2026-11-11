@@ -19,9 +19,10 @@ public class RegistrationCapacityValidator implements RegistrationCreationData{
             throw new ValidationException("Event ID must be informed!");
         }
 
-        var event = eventRepository.getReferenceById(data.eventId());
+        var event = registration.getEvent();
 
-        if (event.getTotalParticipants() >= event.getMaxParticipants()) {
+        if (event.getMaxParticipants() != null &&
+                event.getTotalParticipants() >= event.getMaxParticipants()) {
             throw new ValidationException(
                     "You cannot register! The event reached its maximum capacity."
             );

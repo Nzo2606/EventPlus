@@ -8,6 +8,8 @@ import jakarta.xml.bind.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 public class EventRegistrationPeriodValidator implements RegistrationCreationData{
 
@@ -20,10 +22,15 @@ public class EventRegistrationPeriodValidator implements RegistrationCreationDat
 
     @Override
     public void validate(RegistrationCreateData data, Registration registration) throws ValidationException {
-        var event = eventRepository.getReferenceById(data.eventId());
+        var now = LocalDateTime.now();
+        var event = registration.getEvent();
 
-        if (registration.getRegistrationDate().isAfter(event.getRegistrationDeadline())){
-            throw new ValidationException("Error! The registration period for this event has already ended.");
+        if (now.isBefore(event.getRegistrationStartDate()) ||
+                now.isAfter(event.getRegistrationDeadline())) {
+
+            throw new ValidationException(
+                    "The registration period for this event is closed."
+            );
         }
     }
 }

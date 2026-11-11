@@ -23,7 +23,7 @@ public class OccurrenceSelectedDaysValidator implements RegistrationCreationData
         var occurrenceIds = data.occurrenceIds();
 
         // 2. Verifica se o modo de registro do evento são os dias selecionados ("SELECTED_DAYS")
-        if (registration.getEvent().getRegistrationMode().equals(RegistrationMode.SELECTED_DAYS)){
+        if (registration.getEvent().getRegistrationMode() == RegistrationMode.SELECTED_DAYS){
 
             // 2.1 Verifica se o campo "occurrencesIds" não está presente (null), ou está vazio (.isEmpty)
             if (occurrenceIds == null || occurrenceIds.isEmpty()) {
@@ -33,6 +33,13 @@ public class OccurrenceSelectedDaysValidator implements RegistrationCreationData
             }
         }else{
             return;
+        }
+
+        // 2.2 Verifica se existe algum valor nulo entre as ocorrências escolhidas.
+        if (occurrenceIds.contains(null)) {
+            throw new ValidationException(
+                    "Occurrence IDs cannot contain null values."
+            );
         }
 
         // 3. Filtrando os ‘IDs’, não permitindo dados duplicados.
