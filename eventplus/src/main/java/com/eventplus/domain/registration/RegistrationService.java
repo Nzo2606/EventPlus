@@ -6,11 +6,15 @@ import com.eventplus.domain.registration.dto.RegistrationCreateData;
 import com.eventplus.domain.registration.dto.RegistrationDetailData;
 import com.eventplus.domain.registration.dto.RegistrationListData;
 import com.eventplus.domain.registration.enums.RegistrationStatus;
+import com.eventplus.domain.registration.validations.RegistrationCreationData;
 import jakarta.xml.bind.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class RegistrationService {
@@ -24,21 +28,30 @@ public class RegistrationService {
     @Autowired
     ParticipantRepository participantRepository;
 
+    @Autowired
+    private List<RegistrationCreationData> validators;
 
+
+    @Transactional(rollbackFor = Exception.class)
     public RegistrationDetailData register (RegistrationCreateData data) throws ValidationException {
         var event = eventRepository.findById(data.eventId())
                 .orElseThrow(() ->
                         new ValidationException("The informed event Id does not exist!")
                 );
 
-        var participant = participantRepository.findById(data.eventId())
+        var participant = participantRepository.findById(data.participantId())
                 .orElseThrow(() ->
                         new ValidationException("The informed participant Id does not exist!")
                 );
         var registration = new Registration();
         registration.setEvent(event);
         registration.setParticipant(participant);
-        event.addNewParticipant(1);
+
+        for (var validator : validators) {
+            validator.validate(data, registration);
+        }
+
+        event.addNewParticipant();
         registration.setStatus(RegistrationStatus.CONFIRMED);
 
         registrationRepository.save(registration);
