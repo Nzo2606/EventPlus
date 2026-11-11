@@ -18,7 +18,7 @@ public record RegistrationListData(
         this(
                 registration.getEvent().getId(),
                 registration.getParticipant().getId(),
-                registration.getRegistration_date(),
+                registration.getRegistrationDate(),
                 registration.getStatus()
         );
     }

@@ -136,6 +136,10 @@ public class Event {
     }
 
 
+    public void addNewParticipant(Integer addParticipant) {
+        this.totalParticipants = getTotalParticipants() + addParticipant;
+    }
+
     public void addOccurrence(EventOccurrence occurrence){
         occurrences.add(occurrence);
         occurrence.setEvent(this);

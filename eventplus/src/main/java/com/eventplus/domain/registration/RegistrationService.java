@@ -38,6 +38,7 @@ public class RegistrationService {
         var registration = new Registration();
         registration.setEvent(event);
         registration.setParticipant(participant);
+        event.addNewParticipant(1);
         registration.setStatus(RegistrationStatus.CONFIRMED);
 
         registrationRepository.save(registration);
