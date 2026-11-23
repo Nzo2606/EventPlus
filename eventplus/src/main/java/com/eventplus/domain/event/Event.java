@@ -4,7 +4,7 @@ import com.eventplus.domain.address.Address;
 import com.eventplus.domain.category.Category;
 import com.eventplus.domain.event.dto.registration.EventRegistrationData;
 import com.eventplus.domain.event.dto.update.EventUpdateData;
-import com.eventplus.domain.event.ocurrence.EventOccurrence;
+import com.eventplus.domain.event.occurrence.EventOccurrence;
 import com.eventplus.domain.organizer.Organizer;
 import com.eventplus.domain.registration.enums.PricingMode;
 import com.eventplus.domain.registration.enums.RegistrationMode;

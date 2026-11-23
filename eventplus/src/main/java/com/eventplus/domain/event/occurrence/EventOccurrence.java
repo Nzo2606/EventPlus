@@ -1,4 +1,4 @@
-package com.eventplus.domain.event.ocurrence;
+package com.eventplus.domain.event.occurrence;
 
 import com.eventplus.domain.event.Event;
 import jakarta.persistence.*;

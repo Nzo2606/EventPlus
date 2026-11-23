@@ -1,4 +1,4 @@
-package com.eventplus.domain.event.ocurrence;
+package com.eventplus.domain.event.occurrence;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
