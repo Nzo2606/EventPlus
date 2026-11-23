@@ -4,10 +4,13 @@ package com.eventplus.domain.registration;
 import com.eventplus.domain.event.Event;
 import com.eventplus.domain.participant.Participant;
 import com.eventplus.domain.registration.enums.RegistrationStatus;
+import com.eventplus.domain.registration.occurrence.RegistrationOccurrence;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "registration")
 @Table(name = "registration")
@@ -28,6 +31,7 @@ public class Registration {
 
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private RegistrationStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -40,10 +44,21 @@ public class Registration {
 
     private LocalDateTime paymentConfirmedAt;
 
+    @OneToMany(
+            mappedBy = "registration",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<RegistrationOccurrence> registrationOccurrences = new ArrayList<>();
 
-
+    @PrePersist // ('@PrePersist' executa um metodo automaticamente antes de a entidade ser inserida no banco)
     public void setRegistrationDate() {
         this.registrationDate = LocalDateTime.now();
+    }
+
+    public void addOccurrence(RegistrationOccurrence occurrence) {
+        registrationOccurrences.add(occurrence);
+        occurrence.setRegistration(this);
     }
 
     public void setPaymentConfirmedAt() {
