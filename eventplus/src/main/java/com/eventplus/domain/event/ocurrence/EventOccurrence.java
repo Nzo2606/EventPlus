@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
+@Table(name = "event_occurence")
+@Entity
 public class EventOccurrence {
 
     @Id

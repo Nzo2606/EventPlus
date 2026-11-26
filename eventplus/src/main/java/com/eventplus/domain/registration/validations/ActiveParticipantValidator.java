@@ -16,7 +16,7 @@ public class ActiveParticipantValidator implements RegistrationCreationData {
 
     @Override
     public void validate(RegistrationCreateData data, Registration registration) throws ValidationException {
-        var participantIsActive = participantRepository.findActiveById(data.eventId());
+        var participantIsActive = participantRepository.findActiveById(data.participantId());
 
         if (!participantIsActive){
             throw new ValidationException("Registration could not be done by an inactive event");
