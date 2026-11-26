@@ -53,6 +53,8 @@ public class RegistrationService {
 
         event.addNewParticipant();
         registration.setStatus(RegistrationStatus.CONFIRMED);
+        registration.setRegistrationDate();
+        participant.addNewEvent(event);
 
         registrationRepository.save(registration);
         return new RegistrationDetailData(registration);

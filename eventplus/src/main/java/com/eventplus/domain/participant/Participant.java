@@ -1,11 +1,14 @@
 package com.eventplus.domain.participant;
 
 import com.eventplus.domain.address.Address;
+import com.eventplus.domain.event.Event;
 import com.eventplus.domain.participant.dto.ParticipantRegistrationData;
 import com.eventplus.domain.participant.dto.ParticipantUpdateData;
 import com.eventplus.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity(name = "participant")
 @Table(name = "participant")
@@ -20,6 +23,8 @@ public class Participant extends User{
 
     @Column(nullable = false, unique = true)
     private String ssn;
+
+    private List<Event> events;
 
     public Participant(ParticipantRegistrationData data) {
         super(
@@ -53,5 +58,7 @@ public class Participant extends User{
         }
     }
 
-
+    public void addNewEvent(Event event) {
+        events.add(event);
+    }
 }
