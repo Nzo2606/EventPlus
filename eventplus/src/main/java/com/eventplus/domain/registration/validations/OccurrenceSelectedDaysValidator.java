@@ -1,6 +1,6 @@
 package com.eventplus.domain.registration.validations;
 
-import com.eventplus.domain.event.ocurrence.EventOccurrenceRepository;
+import com.eventplus.domain.event.occurrence.EventOccurrenceRepository;
 import com.eventplus.domain.registration.Registration;
 import com.eventplus.domain.registration.dto.RegistrationCreateData;
 import com.eventplus.domain.registration.enums.RegistrationMode;
