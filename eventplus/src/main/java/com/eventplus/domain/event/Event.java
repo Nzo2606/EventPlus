@@ -6,9 +6,12 @@ import com.eventplus.domain.event.dto.registration.EventRegistrationData;
 import com.eventplus.domain.event.dto.update.EventUpdateData;
 import com.eventplus.domain.event.occurrence.EventOccurrence;
 import com.eventplus.domain.organizer.Organizer;
+import com.eventplus.domain.participant.Participant;
+import com.eventplus.domain.registration.Registration;
 import com.eventplus.domain.registration.enums.PricingMode;
 import com.eventplus.domain.registration.enums.RegistrationMode;
 import jakarta.persistence.*;
+import jakarta.xml.bind.ValidationException;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -36,7 +39,7 @@ public class Event {
     @Column(name = "end_date")
     private LocalDateTime endDate;
 
-    @Column(name = "registraiton_start_date")
+    @Column(name = "registration_start_date")
     private LocalDateTime registrationStartDate;
 
     @Column(name = "registration_dead_line")
@@ -79,8 +82,11 @@ public class Event {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    
     private List<EventOccurrence> occurrences = new ArrayList<>();
 
+    @OneToMany(mappedBy = "event")
+    private List<Registration> registrations = new ArrayList<>();
 
 
     public void cancel(String cancellation_reason){
@@ -109,6 +115,24 @@ public class Event {
         this.price = data.price();
         this.maxParticipants = data.maxParticipants();
         this.address = new Address(data.address());
+
+        // Campos de inscrição: antes não eram copiados do DTO, e as colunas
+        // registration_mode / pricing_mode são NOT NULL, então o insert falhava.
+        this.registrationStartDate = data.registrationStartDate();
+        this.registrationDeadline = data.registrationDeadline();
+        this.registrationMode = data.registrationMode();
+        this.pricingMode = data.pricingMode();
+
+        // Ocorrências (dias/sessões) informadas na criação do evento.
+        // addOccurrence também define o evento de cada ocorrência (lado obrigatório no banco).
+        if (data.occurrences() != null) {
+            for (var occurrenceData : data.occurrences()) {
+                var occurrence = new EventOccurrence();
+                occurrence.setStartDateTime(occurrenceData.startDate());
+                occurrence.setEndDateTime(occurrenceData.endDate());
+                addOccurrence(occurrence);
+            }
+        }
     }
 
     public void updateData(EventUpdateData data) {
@@ -136,9 +160,20 @@ public class Event {
     }
 
 
+    // Ocupa uma vaga do evento para uma nova inscrição confirmada.
+    // Regra adotada: cada inscrição confirmada conta como uma vaga (a mesma pessoa
+    // pode ocupar mais de uma vaga se tiver se inscrito em ocorrências diferentes).
+    // Deve ser chamado somente depois que todos os validadores passarem.
     public void addNewParticipant() {
         this.totalParticipants =
                 (this.totalParticipants == null ? 0 : this.totalParticipants) + 1;
+    }
+
+    // Vincula a inscrição ao evento, mantendo os dois lados do relacionamento
+    // (lista do evento e referência do lado da inscrição) sincronizados.
+    public void addNewRegistration(Registration registration) {
+        registrations.add(registration);
+        registration.setEvent(this);
     }
 
     public void addOccurrence(EventOccurrence occurrence){
