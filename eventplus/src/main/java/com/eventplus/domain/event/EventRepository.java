@@ -34,7 +34,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
         @Query("""
                 select e.active
-                from event e
+                from Event e
                 where
                 e.id = :id
                 """)

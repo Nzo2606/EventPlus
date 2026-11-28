@@ -17,7 +17,7 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
 
     @Query("""
             select p.active
-            from Participant p
+            from participant p
             where
             p.id = :id
             """)
