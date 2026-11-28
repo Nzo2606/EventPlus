@@ -29,6 +29,7 @@ public class RegistrationOccurrence {
     @JoinColumn(name = "occurrence_id", nullable = false)
     private EventOccurrence occurrence;
 
-    @Column(nullable = false)
+    // TINYINT (e não BIT) para bater com o tipo da coluna criada na V9 e com o resto do projeto.
+    @Column(nullable = false, columnDefinition = "TINYINT")
     private Boolean attendance = false;
 }
