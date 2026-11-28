@@ -25,7 +25,9 @@ public record EventDetailData(
                                 Long categoryId,
                                 RegistrationMode registrationMode,
                                 PricingMode pricingMode,
-                                List<EventOccurrence> occurrences
+                                // DTOs de ocorrência (e não entidades): a entidade EventOccurrence
+                                // aponta de volta para o Event, o que gera JSON circular.
+                                List<EventOccurrenceDetailData> occurrences
 
 ) {
     public EventDetailData(Event event) {
@@ -44,7 +46,15 @@ public record EventDetailData(
             event.getCategory().getId(),
             event.getRegistrationMode(),
             event.getPricingMode(),
-            event.getOccurrences()
+            // Converte cada entidade EventOccurrence em seu DTO (id, datas e preço).
+            event.getOccurrences().stream()
+                    .map(o -> new EventOccurrenceDetailData(
+                            o.getId(),
+                            o.getStartDateTime(),
+                            o.getEndDateTime(),
+                            null // preço por ocorrência não é persistido (a entidade não tem esse campo)
+                    ))
+                    .toList()
         );
     }
 }
