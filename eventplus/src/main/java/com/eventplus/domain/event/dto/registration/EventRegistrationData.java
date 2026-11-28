@@ -24,8 +24,10 @@ public record EventRegistrationData(
                                     @Future
                                     LocalDateTime endDate,
 
+                                    // Sem @Future: a inscrição pode abrir agora. Com @Future, a data de início
+                                    // precisaria estar no futuro, e o validador de período (agora dentro da
+                                    // janela) nunca aceitaria uma inscrição.
                                     @NotNull
-                                    @Future
                                     LocalDateTime registrationStartDate,
 
                                     @NotNull
@@ -42,13 +44,17 @@ public record EventRegistrationData(
                                     @Valid
                                     AddressData address,
 
+                                    @NotNull
                                     Long organizerId,
 
                                     @NotNull
                                     Long categoryId,
 
+                                    // Obrigatórios: são colunas NOT NULL no banco (V9).
+                                    @NotNull
                                     RegistrationMode registrationMode,
 
+                                    @NotNull
                                     PricingMode pricingMode,
 
                                     List<@Valid EventOccurrenceData> occurrences
