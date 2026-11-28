@@ -4,10 +4,12 @@ import com.eventplus.domain.address.Address;
 import com.eventplus.domain.event.Event;
 import com.eventplus.domain.participant.dto.ParticipantRegistrationData;
 import com.eventplus.domain.participant.dto.ParticipantUpdateData;
+import com.eventplus.domain.registration.Registration;
 import com.eventplus.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "participant")
@@ -24,7 +26,8 @@ public class Participant extends User{
     @Column(nullable = false, unique = true)
     private String ssn;
 
-    private List<Event> events;
+    @OneToMany(mappedBy = "participant")
+    private List<Registration> registrations = new ArrayList<>();
 
     public Participant(ParticipantRegistrationData data) {
         super(
@@ -58,7 +61,8 @@ public class Participant extends User{
         }
     }
 
-    public void addNewEvent(Event event) {
-        events.add(event);
+    public void addNewRegistration(Registration registration) {
+        registrations.add(registration);
+        registration.setParticipant(this);
     }
 }
