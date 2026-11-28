@@ -32,6 +32,7 @@ public class RegistrationService {
     @Autowired
     ParticipantRepository participantRepository;
 
+    @Autowired
     EventOccurrenceRepository eventOccurrenceRepository;
 
     @Autowired
@@ -50,11 +51,8 @@ public class RegistrationService {
         // 3. Define a primeira condição:
             // caso o modo de registro do evento for o evento completo...
         if (event.getRegistrationMode() == RegistrationMode.FULL_EVENT) {
-
                 // As ocorrências do evento que o usuário escolheu são todas. Pois afinal, a inscrição abrange para todas as datas.
                 occurrences = event.getOccurrences();
-
-
         }
 
         // 3.1. Define a segunda condição:
@@ -95,22 +93,33 @@ public class RegistrationService {
                         new ValidationException("The informed participant Id does not exist!")
                 );
         var registration = new Registration();
-        registration.setEvent(event);
-        registration.setParticipant(participant);
 
+        // O evento é definido antes da validação porque alguns validadores
+        // (período de inscrição, capacidade e ocorrências) precisam dele.
+        // O participante NÃO é vinculado aqui: a validação usa somente os dados
+        // do DTO, e o estado só é alterado depois que todas as regras passarem.
+        registration.setEvent(event);
+
+        // Executa todas as regras de negócio, na ordem definida por @Order.
+        // Se alguma lançar ValidationException, nada abaixo é executado.
         for (var validator : validators) {
             validator.validate(data, registration);
         }
 
-        event.addNewParticipant();
+        // Daqui em diante a inscrição já é válida: aplicamos as mudanças de estado.
         registration.setStatus(RegistrationStatus.CONFIRMED);
-        registration.setRegistrationDate();
-        participant.addNewEvent(event);
+        event.addNewRegistration(registration);      // vincula ao evento (lado do evento e da inscrição)
+        participant.addNewRegistration(registration); // vincula ao participante (define o participante na inscrição)
+        event.addNewParticipant();                    // ocupa uma vaga do evento
+
+        // Converte as ocorrências escolhidas (ou todas, em FULL_EVENT) em RegistrationOccurrence.
+        associateOccurrences(registration, data);
 
         registrationRepository.save(registration);
         return new RegistrationDetailData(registration);
     }
 
+    
     public Page<RegistrationListData> listAll (Pageable pagination){
         return registrationRepository.findAll(pagination)
                 .map(RegistrationListData::new);
