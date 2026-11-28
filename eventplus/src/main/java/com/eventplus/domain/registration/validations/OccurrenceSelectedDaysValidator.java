@@ -6,11 +6,15 @@ import com.eventplus.domain.registration.dto.RegistrationCreateData;
 import com.eventplus.domain.registration.enums.RegistrationMode;
 import jakarta.xml.bind.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 
+// @Order(4): valida as ocorrências escolhidas antes da checagem de duplicidade (@Order(5)),
+// que depende de data.occurrenceIds() já estar consistente.
 @Component
+@Order(4)
 public class OccurrenceSelectedDaysValidator implements RegistrationCreationData{
 
     @Autowired

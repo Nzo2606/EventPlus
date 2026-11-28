@@ -6,9 +6,12 @@ import com.eventplus.domain.registration.Registration;
 import com.eventplus.domain.registration.dto.RegistrationCreateData;
 import jakarta.xml.bind.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+// @Order(2): verifica se o participante está ativo, logo após o evento.
 @Component
+@Order(2)
 public class ActiveParticipantValidator implements RegistrationCreationData {
 
     @Autowired
@@ -16,10 +19,12 @@ public class ActiveParticipantValidator implements RegistrationCreationData {
 
     @Override
     public void validate(RegistrationCreateData data, Registration registration) throws ValidationException {
-        var participantIsActive = participantRepository.findActiveById(data.participantId());
+        // Mesmo cuidado do validador de evento: Boolean pode ser null.
+        var participantIsActive = Boolean.TRUE.equals(participantRepository.findActiveById(data.participantId()));
 
         if (!participantIsActive){
-            throw new ValidationException("Registration could not be done by an inactive event");
+            // Mensagem corrigida: antes dizia "inactive event" por copia do validador de evento.
+            throw new ValidationException("Registration could not be done by an inactive participant");
         }
     }
 }

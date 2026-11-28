@@ -6,11 +6,14 @@ import com.eventplus.domain.registration.RegistrationRepository;
 import com.eventplus.domain.registration.dto.RegistrationCreateData;
 import jakarta.xml.bind.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
+// @Order(3): valida se hoje está dentro da janela de inscrição do evento.
 @Component
+@Order(3)
 public class EventRegistrationPeriodValidator implements RegistrationCreationData{
 
     @Autowired
